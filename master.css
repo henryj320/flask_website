@@ -1,0 +1,138 @@
+* {
+    padding: 0;
+    margin: 0;
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+    color: #f5f5f5;
+}
+
+body {
+    background: #181818;
+    background-image: linear-gradient(165deg, #181818, #282828, #181818);
+    min-height: 100%;
+    position: relative;
+}
+
+#title {
+    margin-top: 75px;
+    margin-left: 15%;
+    margin-right: 15%;
+
+    padding: 2%;
+
+    width: 70%;
+    
+    font-weight: 900;
+    text-align: center;  
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    
+    background-color: #2a5097;
+
+
+    border: 2px solid black;
+    border-radius:10px;
+}
+
+p, label {
+    font-family: Arial, Helvetica, sans-serif
+}
+
+#main_content {
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    padding: 2%;
+
+    width: 70%;
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: #474747;
+
+    border: 2px solid black;
+    border-radius:10px;
+}
+
+.main_content_subdiv {
+    margin-bottom: 25px;
+
+    background-color: #2a5097;
+
+    border: 5px solid black;
+    border-radius:10px;
+}
+
+#main_content div h2 {
+    background-color: #1a315c;
+
+    border-bottom: 3px solid black;
+    border-radius:5px;
+}
+
+#main_content div * {
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+#text_input {
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    padding: 0;
+
+    width: 91.5%;
+    min-height: 50px;
+
+    color: black;
+    
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#text_submit {
+    margin-bottom: 1%;
+
+    background: #96989b;
+
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.link {
+    margin-left: 2%;
+    margin-bottom: 2%;
+
+    display: block;
+    width: 15em;
+
+    text-decoration: none;
+
+    background: #4673c7;
+
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    
+    padding: 2%;
+
+    width: 96%;
+    height: 0.5%;
+
+    background: #0f0f0f;
+}
+
+footer span {
+    margin-right: 150px;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Muscle Checker</title>
+        <link rel="icon" type="image/x-icon" href="../flask_favicon.png">
+        <link rel="icon" type="image/x-icon" href="flask_website/flask_favicon.png">
+        <link rel="stylesheet" href='flask_website/master.css' />
+        <link rel="stylesheet" href='../master.css' />
+        <link rel="stylesheet" href='../website/master.css' />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+
+                text_input = $("#text_input");
+
+                text_input.on("input", function() {  // On text, update the height on the text_input.
+                    this.style.height = 0;  // Resets the size otherwise it will never decrease if text is removed.
+                    this.style.height = (this.scrollHeight) + "px";
+                });
+            
+            });
+        </script>
+    </head>
+    <body>
+        <h1 id="title">Muscle Checker</h1>
+        <div id="main_content">
+            <div class="main_content_subdiv">
+                <h2>Summary</h2>
+                <br>
+                <p>
+                    This page tells you which muscles you missed in your previous gym sessions. Either copy and paste your gym
+                    session or update "insert_calendar_text.txt" to get started!
+                </p>
+                <br>
+            </div>
+            <div class="main_content_subdiv">
+                <h2>Input text</h2>
+                <form action="{{ url_for('muscle_checker')}}" method="post">
+                    <textarea id="text_input" name="text_input" rows="4" cols="50">Insert your calendar text here.</textarea>
+                    <button id="text_submit" type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="main_content_subdiv">
+                <h2>Results</h2>
+                <br>
+                <p>Hit Muscle Groups: {{hit_muscle_groups}}</p>
+                <p>Missed Muscle Groups: {{missed_muscle_groups}}</p>
+                <p>Hit Muscles: {{hit_muscles}}</p>
+
+                {% for suggestion in results_dict["suggestions"] %}
+                    <p>{{suggestion}}</p>
+                {% endfor %}
+                <br>
+            </div>
+        </div>
+        <footer>
+            <span>Author: Henry James</span><span>Contact email: henryj320@gmail.com</span>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add to Calendar</title>
+        <link rel="icon" type="image/x-icon" href="../flask_favicon.png">
+        <link rel="icon" type="image/x-icon" href="flask_website/flask_favicon.png">
+        <link rel="stylesheet" href='flask_website/master.css'/>
+        <link rel="stylesheet" href='../master.css'/>
+        <link rel="stylesheet" href='../website/master.css'/>
+        <link rel="stylesheet" href='flask_website/calendar_css.css'/>
+        <link rel="stylesheet" href='../calendar_css.css'/>
+        <link rel="stylesheet" href='../website/calendar_css.css'/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="flask_website/calendar_script.js"></script>
+        <script src="../calendar_script.js"></script>
+        <script src="../website/calendar_script.js"></script>
+        <script>
+            $(document).ready(function(){
+
+                text_input = $("#text_input");
+
+                text_input.on("input", function() {  // On text, update the height on the text_input.
+                    this.style.height = 0;  // Resets the size otherwise it will never decrease if text is removed.
+                    this.style.height = (this.scrollHeight) + "px";
+                });
+            
+            });
+        </script>
+    </head>
+    <body>
+        <h1 id="title">Autogenerate Gym Calendar</h1>
+        <div id="main_content">
+            <div class="main_content_subdiv">
+                <h2>Input</h2>
+                <br>
+                <form action="{{ url_for('autogenerate_gym_calendar')}}" method="post">
+                    <div class="main_content_subdiv">
+                        <h3>Which week would you like to add your gym sessions to?<br>(Select a Monday)</h3>
+                        <input id="weekMonday" name="weekMonday" type="date">
+                        <br><br><br>
+                        <h3>Which days are you running or going to the gym?</h3>
+                        <div class="half">
+                            <input type="checkbox" id="monCheck" name="monday" value="True">
+                            <label for="monday">Monday</label>
+                            <br>
+                            <input type="checkbox" id="tuesCheck" name="tuesday" value="tuesday">
+                            <label for="tuesday">Tuesday</label>
+                            <br>
+                            <input type="checkbox" id="wedCheck" name="wednesday" value="wednesday">
+                            <label for="wednesday">Wednesday</label>
+                            <br>
+                            <input type="checkbox" id="thursCheck" name="thursday" value="thursday">
+                            <label for="thursday">Thursday</label>
+                        </div>
+                        <div class="half">
+                            <input type="checkbox" id="friCheck" name="friday" value="friday">
+                            <label for="friday">Friday</label>
+                            <br>
+                            <input type="checkbox" id="satCheck" name="saturday" value="saturday">
+                            <label for="saturday">Saturday</label>
+                            <br>
+                            <input type="checkbox" id="sunCheck" name="sunday" value="sunday">
+                            <label for="sunday">Sunday</label>
+                            <br><br>
+                        </div>
+                        <br><br>
+                    </div>
+                    <div class="main_content_subdiv" id="numberOfDiv">
+                        <h3>How many of each session type would you like to add?</h3>
+                        <br>
+                        <label for="totalSessions">Total number of exercise sessions:</label>
+                        <input type="number" id="totalSessions" min="1" value="2" step="1" readonly>
+                        <label for="gymSessions">Number of gym sessions:</label>
+                        <input type="number" id="gymSessions" name="gymSessions" min="0" max="10" value="1" step="1">
+                        <label for="runSessions">Number of runs sessions:</label>
+                        <input type="number" id="runSessions" name="runSessions" min="0" max="10" value="1" step="1">
+                        <label for="otherSessions">Number of other sessions:</label>
+                        <input type="number" id="otherSessions" name="otherSessions" min="0" max="10" value="0" step="1" readonly>
+                        <br><br>
+                    </div>
+                    <div class="main_content_subdiv" id="specificDays">
+                        <h3>Do you have any specific obligations?</h3>
+                        <br>
+                        <span>I have</span>
+                        <select id="exercise1" name="exercise1">
+                            <option value="not_selected_exercise">Select Exercise</option>
+                            <option value="canoe_polo">Canoe Polo</option>
+                            <option value="kayaking">Kayaking</option>
+                            <option value="bouldering">Bouldering</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span>on a</span>
+                        <select id="day1" name="day1">
+                            <option value="not_selected_day">Select Day</option>
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="sarurday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                        </select>
+                        <br><br>
+                    </div>
+                    <input id="submitButton" type="submit">
+                </form>
+            </div>
+            {% if method_post %}
+            <div class="main_content_subdiv">
+                <h2>Results</h2>
+                <br>
+                <table id="resultsTable">
+                    <tr>
+                        <th>Day</th>
+                        <th>Session</th>
+                        <th>Add to Calendar</th>
+                    </tr>
+                    <tr>
+                        <td>Monday</td>
+                        {% for link in links_dict["monday"] %}
+                        <td id="monResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        {% for link in links_dict["tuesday"] %}
+                        <td id="tuesResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        {% for link in links_dict["wednesday"] %}
+                        <td id="wedResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        {% for link in links_dict["thursday"] %}
+                        <td id="thursResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        {% for link in links_dict["friday"] %}
+                        <td id="friResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        {% for link in links_dict["saturday"] %}
+                        <td id="satResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sunday</td>
+                        {% for link in links_dict["sunday"] %}
+                        <td id="satResultTD">{{link[1]}}</td>
+                        <td>
+                            {% if link[0] != '-' %}
+                                <a href="{{link[0]}}" class="addToCalendarA">Add to Calendar</a>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </div>
+            {% endif %}
+        </div>
+        <br><br><br><br>
+        <footer>
+            <span>Author: Henry James</span><span>Contact email: henryj320@gmail.com</span>
+        </footer>
+    </body>
+</html>
